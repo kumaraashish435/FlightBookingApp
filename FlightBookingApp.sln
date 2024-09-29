@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightBookingApp.Data", "FlightBookingApp.Data\FlightBookingApp.Data.csproj", "{7A807BA9-718E-4E38-88B0-1259708E4C59}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightBookingApp.Services", "FlightBookingApp.Services\FlightBookingApp.Services.csproj", "{3D921CB8-BFCC-4A3B-8186-27E9A66F4F07}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightBookingApp.Api", "FlightBookingApp.Api\FlightBookingApp.Api.csproj", "{54C025E0-B77B-4004-8C1F-731C40C2C684}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FlightBookingApp.Web", "FlightBookingApp.Web\FlightBookingApp.Web.csproj", "{C7D89626-B802-40E9-A0EB-193939344588}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "FlightBookingApp.Shared", "FlightBookingApp.Shared\FlightBookingApp.Shared.shproj", "{4BD39771-1774-4D8E-A51D-29FC47536B93}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7A807BA9-718E-4E38-88B0-1259708E4C59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A807BA9-718E-4E38-88B0-1259708E4C59}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A807BA9-718E-4E38-88B0-1259708E4C59}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A807BA9-718E-4E38-88B0-1259708E4C59}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D921CB8-BFCC-4A3B-8186-27E9A66F4F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D921CB8-BFCC-4A3B-8186-27E9A66F4F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D921CB8-BFCC-4A3B-8186-27E9A66F4F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D921CB8-BFCC-4A3B-8186-27E9A66F4F07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C025E0-B77B-4004-8C1F-731C40C2C684}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C025E0-B77B-4004-8C1F-731C40C2C684}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C025E0-B77B-4004-8C1F-731C40C2C684}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C025E0-B77B-4004-8C1F-731C40C2C684}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7D89626-B802-40E9-A0EB-193939344588}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7D89626-B802-40E9-A0EB-193939344588}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7D89626-B802-40E9-A0EB-193939344588}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7D89626-B802-40E9-A0EB-193939344588}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {15C4F9BB-60BC-4B4A-AE6B-0045E2184D2A}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		FlightBookingApp.Shared\FlightBookingApp.Shared.projitems*{4bd39771-1774-4d8e-a51d-29fc47536b93}*SharedItemsImports = 13
+		FlightBookingApp.Shared\FlightBookingApp.Shared.projitems*{54c025e0-b77b-4004-8c1f-731c40c2c684}*SharedItemsImports = 5
+		FlightBookingApp.Shared\FlightBookingApp.Shared.projitems*{c7d89626-b802-40e9-a0eb-193939344588}*SharedItemsImports = 5
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,75 @@
+﻿@{
+    Layout = "_Layout";
+}
+
+<div class="index-page">
+    <div class="home-section d-flex flex-column">
+        <div class="h-50 w-100">
+        </div>
+        <div class="h-50 w-100 d-flex align-items-center justify-content-center">
+            <div class="search-wrapper">
+                <div class="search-options">
+                    <button class="option active">✈ Flights</button>
+                </div>
+
+                <h2 class="search-title">Millions of cheap flights. One simple search.</h2>
+
+                <form class="search-form" method="post" action="/Home/SearchFlights">
+                    <div class="input-group">
+                        <label>From</label>
+                        <input type="text" name="from" placeholder="Indira Gandhi International Airport" required>
+                    </div>
+                    <div class="input-group">
+                        <label>To</label>
+                        <input type="text" name="to" placeholder="Country, city or airport" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Depart</label>
+                        <input type="date" name="depart" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Return</label>
+                        <input type="date" name="return" style="display: none;">
+                    </div>
+                    <div class="input-group">
+                        <label>Number of Passengers</label>
+                        <input type="number" name="passengers" min="1" value="1" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Trip Type</label>
+                        <select id="tripType" name="tripType">
+                            <option value="oneWay">One Way</option>
+                            <option value="roundTrip">Round Trip</option>
+                            <option value="multiCity">Multi-City</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="search-button">Search</button>
+                </form>
+
+                <div class="checkbox-group">
+                    <label><input type="checkbox" name="nearbyAirports"> Add nearby airports</label>
+                    <label><input type="checkbox" name="directFlights"> Direct flights</label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Get the trip type select element
+    var tripTypeSelect = document.getElementById("tripType");
+    // Get the return date input element
+    var returnDateInput = document.getElementsByName("return")[0];
+
+    // Add an event listener to the trip type select element
+    tripTypeSelect.addEventListener("change", function () {
+        // Check if the selected value is "roundTrip"
+        if (this.value === "roundTrip") {
+            // Show the return date input field
+            returnDateInput.style.display = "block";
+        } else {
+            // Hide the return date input field
+            returnDateInput.style.display = "none";
+        }
+    });
+</script>

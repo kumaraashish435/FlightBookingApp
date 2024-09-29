@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+	  <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	  <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\$(AssemblyName).xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="BCrypt.Net-Next" Version="4.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.33" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FlightBookingApp.Services\FlightBookingApp.Services.csproj" />
+    <ProjectReference Include="..\FlightBookingApp.Data\FlightBookingApp.Data.csproj" />
+  </ItemGroup>
+
+  <Import Project="..\FlightBookingApp.Shared\FlightBookingApp.Shared.projitems" Label="Shared" />
+
+</Project>

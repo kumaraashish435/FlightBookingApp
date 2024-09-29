@@ -1,0 +1,39 @@
+﻿// Views/Shared/_Layout.cshtml
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - FlightBookingApp</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <a href="/">Home</a>
+        </div>
+        <nav class="nav-links">
+            <a href="/bookings">Bookings</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a href="/Account/Logout">Logout</a>
+            }
+            else
+            {
+                <a href="/Account/Register">Register</a>
+                <a href="/Account/Login">Login</a>
+            }
+        </nav>
+    </header>
+    <main>
+        @RenderBody()
+    </main>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js"></script>
+
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

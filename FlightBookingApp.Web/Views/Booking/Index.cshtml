@@ -1,0 +1,28 @@
+﻿@model IEnumerable<FlightBookingApp.Data.Models.Booking>
+
+@{
+    ViewData["Title"] = "Bookings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Bookings</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Flight ID</th>
+            <th>Booking Date</th>
+            <th>Booking Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var booking in Model)
+        {
+            <tr>
+                <td>@booking.FlightId</td>
+                <td>@booking.BookingDate</td>
+                <td>@booking.BookingStatus</td>
+            </tr>
+        }
+    </tbody>
+</table>

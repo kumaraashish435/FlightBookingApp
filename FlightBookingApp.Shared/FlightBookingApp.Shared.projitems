@@ -9,6 +9,7 @@
     <Import_RootNamespace>FlightBookingApp.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Models\AuthenticationResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\RegisterViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models\LoginViewModel.cs" />
   </ItemGroup>

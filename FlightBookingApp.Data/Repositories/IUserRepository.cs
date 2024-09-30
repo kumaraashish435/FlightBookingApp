@@ -11,8 +11,9 @@ namespace FlightBookingApp.Data.Repositories
     {
         Task<IEnumerable<User>> GetUsersAsync();
         Task<User> GetUserByIdAsync(int id);
+        Task<User> GetUserByEmail(string email);
         Task AddUserAsync(User user);
         Task UpdateUserAsync(User user);
-        Task DeleteUserAsync(int id);
+        Task DeleteUserAsync(int id) ;
     }
 }

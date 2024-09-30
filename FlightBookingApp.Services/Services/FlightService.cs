@@ -29,45 +29,19 @@ namespace FlightBookingApp.Services.Services
             return await _flightRepository.GetFlightByIdAsync(id);
         }
 
-        public async Task AddFlightAsync(Flight flight)
+        public async Task<IEnumerable<Flight>> SearchFlights(string startLocation, string destination, DateTime date, int passengers, string tripType)
         {
-            await _flightRepository.AddFlightAsync(flight);
+            return await _flightRepository.SearchFlights(startLocation, destination, date, passengers, tripType);
         }
 
-        public async Task UpdateFlightAsync(Flight flight)
+        public async Task<IEnumerable<Flight>> FilterFlights(int stops, DateTime departureTime, DateTime arrivalTime)
         {
-            await _flightRepository.UpdateFlightAsync(flight);
+            return await _flightRepository.FilterFlights(stops, departureTime, arrivalTime);
         }
 
-        public async Task DeleteFlightAsync(int id)
+        public async Task<IEnumerable<Flight>> GetRecommendedFlights(string preference)
         {
-            await _flightRepository.DeleteFlightAsync(id);
-        }
-
-        // Implementing methods for new models
-        public async Task<IEnumerable<Booking>> GetBookingsAsync()
-        {
-            return await _flightRepository.GetBookingsAsync();
-        }
-
-        public async Task<Booking> GetBookingByIdAsync(int id)
-        {
-            return await _flightRepository.GetBookingByIdAsync(id);
-        }
-
-        public async Task AddBookingAsync(Booking booking)
-        {
-            await _flightRepository.AddBookingAsync(booking);
-        }
-
-        public async Task UpdateBookingAsync(Booking booking)
-        {
-            await _flightRepository.UpdateBookingAsync(booking);
-        }
-
-        public async Task DeleteBookingAsync(int id)
-        {
-            await _flightRepository.DeleteBookingAsync(id);
+            return await _flightRepository.GetRecommendedFlights(preference);
         }
     }
 }

@@ -11,7 +11,9 @@ namespace FlightBookingApp.Data.Models
         public int Id { get; set; }                   // Unique identifier
         public string UserName { get; set; }          // Username for login
         public string Email { get; set; }             // Email for login
-        public string PasswordHash { get; set; }
+        public string Password { get; set; }
+        public string PhoneNumber { get; set; }
+        public string PasswordSalt { get; set; }
     }
 
 }

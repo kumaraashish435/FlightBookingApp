@@ -2,71 +2,77 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace FlightBookingApp.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FlightsController : ControllerBase
+    public class FlightController : ControllerBase
     {
         private readonly IFlightService _flightService;
-        private readonly ILogger<FlightsController> _logger;
+        private readonly HttpClient _httpClient;
 
-        public FlightsController(IFlightService flightService, ILogger<FlightsController> logger)
+        public FlightController(IFlightService flightService, HttpClient httpClient)
         {
             _flightService = flightService;
-            _logger = logger;
+            _httpClient = httpClient;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Flight>>> GetFlights()
+        // GET: api/flights/search?startLocation={}&destination={}&date={}&passengers={}&tripType={}
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Flight>>> SearchFlights(string startLocation, string destination, DateTime date, int passengers, string tripType)
         {
-            _logger.LogInformation("Getting all flights");
-            var flights = await _flightService.GetFlightsAsync();
+            var flights = await _flightService.SearchFlights(startLocation, destination, date, passengers, tripType);
             return Ok(flights);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Flight>> GetFlight(int id)
+        // GET: api/flights/filter?stops={}&departureTime={}&arrivalTime={}
+        [HttpGet("filter")]
+        public async Task<ActionResult<IEnumerable<Flight>>> FilterFlights(int stops, DateTime departureTime, DateTime arrivalTime)
         {
-            _logger.LogInformation("Getting flight with ID {FlightId}", id);
+            var flights = await _flightService.FilterFlights(stops, departureTime, arrivalTime);
+            return Ok(flights);
+        }
+
+        // GET: api/flights/recommendations?preference={preference}
+        [HttpGet("recommendations")]
+        public async Task<ActionResult<IEnumerable<Flight>>> GetRecommendedFlights(string preference)
+        {
+            var flights = await _flightService.GetRecommendedFlights(preference);
+            return Ok(flights);
+        }
+
+        // GET: api/flights/{id}
+        [HttpGet("{id}")]
+        public async Task<ActionResult<Flight>> GetFlightById(int id)
+        {
             var flight = await _flightService.GetFlightByIdAsync(id);
+
             if (flight == null)
             {
-                _logger.LogWarning("Flight with ID {FlightId} not found", id);
                 return NotFound();
             }
+
             return Ok(flight);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> AddFlight(Flight flight)
+        // GET: api/flights/external
+        [HttpGet("external")]
+        public async Task<ActionResult<IEnumerable<Flight>>> GetExternalFlights()
         {
-            _logger.LogInformation("Adding a new flight");
-            await _flightService.AddFlightAsync(flight);
-            return CreatedAtAction(nameof(GetFlight), new { id = flight.Id }, flight);
-        }
-
-        [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateFlight(int id, Flight flight)
-        {
-            if (id != flight.Id)
+            var response = await _httpClient.GetAsync("https://externalapi.com/flights");
+            if (!response.IsSuccessStatusCode)
             {
-                _logger.LogWarning("Flight ID mismatch: {FlightId} != {Flight.Id}", id, flight.Id);
-                return BadRequest();
+                return StatusCode((int)response.StatusCode, "Error fetching data from external API");
             }
-            _logger.LogInformation("Updating flight with ID {FlightId}", id);
-            await _flightService.UpdateFlightAsync(flight);
-            return NoContent();
-        }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult> DeleteFlight(int id)
-        {
-            _logger.LogInformation("Deleting flight with ID {FlightId}", id);
-            await _flightService.DeleteFlightAsync(id);
-            return NoContent();
+            var responseData = await response.Content.ReadAsStringAsync();
+            var flights = JsonSerializer.Deserialize<IEnumerable<Flight>>(responseData, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+
+            return Ok(flights);
         }
     }
 }

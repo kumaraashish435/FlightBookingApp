@@ -9,5 +9,6 @@
     public DateTime ArrivalTime { get; set; }      // Arrival time
     public int NumberOfStops { get; set; }         // Number of stops (e.g., 1 stop, non-stop)
     public decimal Fare { get; set; }              // Ticket fare
-    public string TripType { get; set; } = string.Empty;           // Round-trip, One-way, Multi-city
+    public string TripType { get; set; } = string.Empty;
+    public int AvailableSeats { get; set; }
 }

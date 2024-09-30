@@ -12,15 +12,8 @@ namespace FlightBookingApp.Data.Repositories
     {
         Task<IEnumerable<Flight>> GetFlightsAsync();
         Task<Flight> GetFlightByIdAsync(int id);
-        Task AddFlightAsync(Flight flight);
-        Task UpdateFlightAsync(Flight flight);
-        Task DeleteFlightAsync(int id);
-
-        // Additional methods for new models
-        Task<IEnumerable<Booking>> GetBookingsAsync();
-        Task<Booking> GetBookingByIdAsync(int id);
-        Task AddBookingAsync(Booking booking);
-        Task UpdateBookingAsync(Booking booking);
-        Task DeleteBookingAsync(int id);
+        Task<IEnumerable<Flight>> SearchFlights(string startLocation, string destination, DateTime date, int passengers, string tripType);
+        Task<IEnumerable<Flight>> FilterFlights(int stops, DateTime departureTime, DateTime arrivalTime);
+        Task<IEnumerable<Flight>> GetRecommendedFlights(string preference);
     }
 }

@@ -1,9 +1,8 @@
 ﻿using FlightBookingApp.Data.Context;
 using FlightBookingApp.Data.Models;
-using FlightBookingApp.Data.Context;
-using FlightBookingApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FlightBookingApp.Data.Repositories
@@ -17,36 +16,56 @@ namespace FlightBookingApp.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Booking>> GetBookingsAsync()
-        {
-            return await _context.Bookings.Include(b => b.Passengers).Include(b => b.Flight).ToListAsync();
-        }
-
         public async Task<Booking> GetBookingByIdAsync(int id)
         {
-            return await _context.Bookings.Include(b => b.Passengers).Include(b => b.Flight).FirstOrDefaultAsync(b => b.Id == id);
+            return await _context.Bookings
+                .Include(b => b.Passengers)
+                .Include(b => b.Flight)
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
-        public async Task AddBookingAsync(Booking booking)
+        public async Task<Booking> CancelBookingAsync(int bookingId)
         {
-            await _context.Bookings.AddAsync(booking);
-            await _context.SaveChangesAsync();
+            var booking = await GetBookingByIdAsync(bookingId);
+            if (booking != null)
+            {
+                booking.BookingStatus = "Canceled";
+                await _context.SaveChangesAsync();
+            }
+            return booking;
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookedFlightsAsync(string email)
+        {
+            return await _context.Bookings
+                .Include(b => b.Passengers)
+                .Include(b => b.Flight)
+                .Where(b => b.Passengers.Any(p => p.Email == email) && b.BookingStatus == "Confirmed")
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Booking>> GetCancelledFlightsAsync(string email)
+        {
+            return await _context.Bookings
+                .Include(b => b.Passengers)
+                .Include(b => b.Flight)
+                .Where(b => b.Passengers.Any(p => p.Email == email) && b.BookingStatus == "Canceled")
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<Booking>> GetRefundedFlightsAsync(string email)
+        {
+            return await _context.Bookings
+                .Include(b => b.Passengers)
+                .Include(b => b.Flight)
+                .Where(b => b.Passengers.Any(p => p.Email == email) && b.BookingStatus == "Refunded")
+                .ToListAsync();
         }
 
         public async Task UpdateBookingAsync(Booking booking)
         {
             _context.Bookings.Update(booking);
             await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteBookingAsync(int id)
-        {
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking != null)
-            {
-                _context.Bookings.Remove(booking);
-                await _context.SaveChangesAsync();
-            }
         }
     }
 }

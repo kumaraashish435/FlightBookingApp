@@ -1,13 +1,10 @@
 ﻿using FlightBookingApp.Data.Models;
 using FlightBookingApp.Data.Repositories;
 using FlightBookingApp.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightBookingApp.Services.Services
+namespace FlightBookingApp.Services
 {
     public class BookingService : IBookingService
     {
@@ -18,29 +15,34 @@ namespace FlightBookingApp.Services.Services
             _bookingRepository = bookingRepository;
         }
 
-        public async Task<IEnumerable<Booking>> GetBookingsAsync()
-        {
-            return await _bookingRepository.GetBookingsAsync();
-        }
-
         public async Task<Booking> GetBookingByIdAsync(int id)
         {
             return await _bookingRepository.GetBookingByIdAsync(id);
         }
 
-        public async Task AddBookingAsync(Booking booking)
+        public async Task<Booking> CancelBookingAsync(int bookingId)
         {
-            await _bookingRepository.AddBookingAsync(booking);
+            return await _bookingRepository.CancelBookingAsync(bookingId);
+        }
+
+        public async Task<IEnumerable<Booking>> GetBookedFlightsAsync(string email)
+        {
+            return await _bookingRepository.GetBookedFlightsAsync(email);
+        }
+
+        public async Task<IEnumerable<Booking>> GetCancelledFlightsAsync(string email)
+        {
+            return await _bookingRepository.GetCancelledFlightsAsync(email);
+        }
+
+        public async Task<IEnumerable<Booking>> GetRefundedFlightsAsync(string email)
+        {
+            return await _bookingRepository.GetRefundedFlightsAsync(email);
         }
 
         public async Task UpdateBookingAsync(Booking booking)
         {
             await _bookingRepository.UpdateBookingAsync(booking);
-        }
-
-        public async Task DeleteBookingAsync(int id)
-        {
-            await _bookingRepository.DeleteBookingAsync(id);
         }
     }
 }

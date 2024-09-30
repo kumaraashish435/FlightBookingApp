@@ -20,63 +20,41 @@ namespace FlightBookingApp.Data.Repositories
             return await _context.Flights.ToListAsync();
         }
 
-        public async Task<Flight> GetFlightByIdAsync(int id)
+        public async Task<Flight?> GetFlightByIdAsync(int id)
         {
-            return await _context.Flights.FindAsync(id);
+            return await _context.Flights.SingleOrDefaultAsync(f => f.Id == id);
         }
 
-        public async Task AddFlightAsync(Flight flight)
+        public async Task<IEnumerable<Flight>> SearchFlights(string startLocation, string destination, DateTime date, int passengers, string tripType)
         {
-            await _context.Flights.AddAsync(flight);
-            await _context.SaveChangesAsync();
+            return await _context.Flights
+                .Where(f => f.StartLocation == startLocation
+                         && f.Destination == destination
+                         && f.DepartureTime.Date == date.Date)
+                .ToListAsync();
         }
 
-        public async Task UpdateFlightAsync(Flight flight)
+        public async Task<IEnumerable<Flight>> FilterFlights(int stops, DateTime departureTime, DateTime arrivalTime)
         {
-            _context.Flights.Update(flight);
-            await _context.SaveChangesAsync();
+            return await _context.Flights
+                .Where(f => f.NumberOfStops == stops
+                         && f.DepartureTime >= departureTime
+                         && f.ArrivalTime <= arrivalTime)
+                .ToListAsync();
         }
 
-        public async Task DeleteFlightAsync(int id)
+        public async Task<IEnumerable<Flight>> GetRecommendedFlights(string preference)
         {
-            var flight = await _context.Flights.FindAsync(id);
-            if (flight != null)
+            if (preference == "cheapest")
             {
-                _context.Flights.Remove(flight);
-                await _context.SaveChangesAsync();
+                return await _context.Flights.OrderBy(f => f.Fare).Take(5).ToListAsync();
             }
-        }
-
-        public async Task<IEnumerable<Booking>> GetBookingsAsync()
-        {
-            return await _context.Bookings.Include(b => b.Passengers).Include(b => b.Flight).ToListAsync();
-        }
-
-        public async Task<Booking> GetBookingByIdAsync(int id)
-        {
-            return await _context.Bookings.Include(b => b.Passengers).Include(b => b.Flight).FirstOrDefaultAsync(b => b.Id == id);
-        }
-
-        public async Task AddBookingAsync(Booking booking)
-        {
-            await _context.Bookings.AddAsync(booking);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task UpdateBookingAsync(Booking booking)
-        {
-            _context.Bookings.Update(booking);
-            await _context.SaveChangesAsync();
-        }
-
-        public async Task DeleteBookingAsync(int id)
-        {
-            var booking = await _context.Bookings.FindAsync(id);
-            if (booking != null)
+            else if (preference == "best-time")
             {
-                _context.Bookings.Remove(booking);
-                await _context.SaveChangesAsync();
+                return await _context.Flights.OrderBy(f => f.DepartureTime).Take(5).ToListAsync();
             }
+
+            return Enumerable.Empty<Flight>();
         }
     }
 }

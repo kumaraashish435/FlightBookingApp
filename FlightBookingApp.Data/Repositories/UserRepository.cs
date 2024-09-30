@@ -1,10 +1,7 @@
 ﻿using FlightBookingApp.Data.Context;
 using FlightBookingApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightBookingApp.Data.Repositories
@@ -48,6 +45,11 @@ namespace FlightBookingApp.Data.Repositories
                 _context.Users.Remove(user);
                 await _context.SaveChangesAsync();
             }
+        }
+
+        public async Task<User> GetUserByEmail(string email)
+        {
+            return await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
         }
     }
 }

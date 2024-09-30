@@ -9,6 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models; // Added namespace
 using System.Reflection; // Added namespace
 using System.Text;
+using FlightBookingApp.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +21,7 @@ builder.Logging.AddEventSourceLogger();
 
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("FlightBookingDb")));
 
 // Register repositories
 builder.Services.AddScoped<IFlightRepository, FlightRepository>();
@@ -44,7 +45,9 @@ builder.Services.AddScoped<ITravelInsuranceService, TravelInsuranceService>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IUserService, UserService>();
 
+// Add services to the container.
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
 
 // Add SwaggerGen
 builder.Services.AddSwaggerGen(options =>

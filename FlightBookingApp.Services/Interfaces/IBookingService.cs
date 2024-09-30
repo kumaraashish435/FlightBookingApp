@@ -9,10 +9,11 @@ namespace FlightBookingApp.Services.Interfaces
 {
     public interface IBookingService
     {
-        Task<IEnumerable<Booking>> GetBookingsAsync();
         Task<Booking> GetBookingByIdAsync(int id);
-        Task AddBookingAsync(Booking booking);
+        Task<Booking> CancelBookingAsync(int bookingId);
+        Task<IEnumerable<Booking>> GetBookedFlightsAsync(string email);
+        Task<IEnumerable<Booking>> GetCancelledFlightsAsync(string email);
+        Task<IEnumerable<Booking>> GetRefundedFlightsAsync(string email);
         Task UpdateBookingAsync(Booking booking);
-        Task DeleteBookingAsync(int id);
     }
 }

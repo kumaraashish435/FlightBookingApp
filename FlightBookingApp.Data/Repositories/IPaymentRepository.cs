@@ -11,8 +11,10 @@ namespace FlightBookingApp.Data.Repositories
     {
         Task<IEnumerable<Payment>> GetPaymentsAsync();
         Task<Payment> GetPaymentByIdAsync(int id);
-        Task AddPaymentAsync(Payment payment);
+        Task<bool> ProcessPaymentAsync(Payment payment); // Process a payment
+        Task<bool> ApplyOfferAsync(int bookingId, string offerCode); // Apply a discount offer
+        Task<bool> AddInsuranceAsync(int bookingId, TravelInsurance insurance); // Add travel insurance
         Task UpdatePaymentAsync(Payment payment);
-        Task DeletePaymentAsync(int id);
+        
     }
 }

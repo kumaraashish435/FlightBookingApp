@@ -1,8 +1,5 @@
 ﻿using FlightBookingApp.Data.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FlightBookingApp.Services.Interfaces
@@ -11,8 +8,9 @@ namespace FlightBookingApp.Services.Interfaces
     {
         Task<IEnumerable<Payment>> GetPaymentsAsync();
         Task<Payment> GetPaymentByIdAsync(int id);
-        Task AddPaymentAsync(Payment payment);
+        Task<bool> ProcessPaymentAsync(Payment payment);
+        Task<bool> ApplyOfferAsync(int bookingId, string offerCode);
+        Task<bool> AddInsuranceAsync(int bookingId, TravelInsurance insurance);
         Task UpdatePaymentAsync(Payment payment);
-        Task DeletePaymentAsync(int id);
     }
 }

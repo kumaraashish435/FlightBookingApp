@@ -1,13 +1,10 @@
 ﻿using FlightBookingApp.Data.Models;
 using FlightBookingApp.Data.Repositories;
 using FlightBookingApp.Services.Interfaces;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace FlightBookingApp.Services.Services
+namespace FlightBookingApp.Services
 {
     public class PaymentService : IPaymentService
     {
@@ -28,19 +25,24 @@ namespace FlightBookingApp.Services.Services
             return await _paymentRepository.GetPaymentByIdAsync(id);
         }
 
-        public async Task AddPaymentAsync(Payment payment)
+        public async Task<bool> ProcessPaymentAsync(Payment payment)
         {
-            await _paymentRepository.AddPaymentAsync(payment);
+            return await _paymentRepository.ProcessPaymentAsync(payment);
+        }
+
+        public async Task<bool> ApplyOfferAsync(int bookingId, string offerCode)
+        {
+            return await _paymentRepository.ApplyOfferAsync(bookingId, offerCode);
+        }
+
+        public async Task<bool> AddInsuranceAsync(int bookingId, TravelInsurance insurance)
+        {
+            return await _paymentRepository.AddInsuranceAsync(bookingId, insurance);
         }
 
         public async Task UpdatePaymentAsync(Payment payment)
         {
             await _paymentRepository.UpdatePaymentAsync(payment);
-        }
-
-        public async Task DeletePaymentAsync(int id)
-        {
-            await _paymentRepository.DeletePaymentAsync(id);
         }
     }
 }
